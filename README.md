@@ -1,17 +1,15 @@
-# Jokenpô 🪨📄✂️
+# Jokenpo 🪨📄✂️
 
 Jogo de pedra, papel e tesoura contra o computador, executado no terminal.
 
 ## Objetivo
 Vencer 3 rodadas antes do computador (melhor de 5).
 
-## Integrantes e contribuições
-| Nome | Principais contribuições |
-|---|---|
-| (Giuliany) | |
-| (Estefany) | |
-| (Jacqueline) | |
-| (Anna) | |
+## Integrantes
+- Giuliany
+- Estefany
+- Jacqueline
+- Anna
 
 ## Regras
 - 🪨 Pedra vence ✂️ Tesoura, ✂️ Tesoura vence 📄 Papel e 📄 Papel vence 🪨 Pedra.
@@ -37,7 +35,7 @@ No Linux ou macOS, use `python3 main.py`.
 ## Exemplo de uso
     Escolha: 1 - 🪨 Pedra | 2 - 📄 Papel | 3 - ✂️ Tesoura | 0 - Desistir
     Sua opção: 1
-    Rodada 1: 🪨 Pedra x ✂️ Tesoura = 🏆 Vitória
+    Rodada 1: 🪨 Pedra x ✂️ Tesoura = Vitória
     Placar: Ana 1 x 0 Computador | Empates: 0
 
 ## Conceitos aplicados
