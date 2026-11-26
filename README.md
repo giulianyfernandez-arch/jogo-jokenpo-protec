@@ -1,46 +1,143 @@
-# Jokenpo 🪨📄✂️
+# Jokenpô - UC 4: Desenvolver Algoritmos
+import random
 
-Jogo de pedra, papel e tesoura contra o computador, executado no terminal.
+OPCOES = ["Pedra", "Papel", "Tesoura"]
+EMOJIS = {"Pedra": "🪨", "Papel": "📄", "Tesoura": "✂️"}
 
-## Objetivo
-Vencer 3 rodadas antes do computador (melhor de 5).
+# Cada jogada (chave) vence o seu valor
+VENCE = {"Pedra": "Tesoura", "Papel": "Pedra", "Tesoura": "Papel"}
 
-## Integrantes
-- Giuliany
-- Estefany
-- Jacqueline
-- Anna
+VITORIAS_PARA_GANHAR = 3  # melhor de 5
 
-## Regras
-- 🪨 Pedra vence ✂️ Tesoura, ✂️ Tesoura vence 📄 Papel e 📄 Papel vence 🪨 Pedra.
-- Jogadas iguais dão empate, que não conta como vitória.
-- Ganha a partida quem vencer 3 rodadas.
 
-## Como executar
-É preciso ter o Python 3.10 ou superior (por causa do `match case`).
+def mostrar_menu():
+    print("\n===== JOKENPÔ 🪨📄✂️ =====")
+    print("1 - Iniciar jogo")
+    print("2 - Consultar regras")
+    print("3 - Consultar resultados")
+    print("4 - Sair")
 
-    python main.py
 
-No Linux ou macOS, use `python3 main.py`.
+def mostrar_regras():
+    print("\n--- REGRAS ---")
+    print("🪨 Pedra vence ✂️ Tesoura.")
+    print("✂️ Tesoura vence 📄 Papel.")
+    print("📄 Papel vence 🪨 Pedra.")
+    print("Jogadas iguais dão empate.")
+    print("Ganha a partida quem vencer", VITORIAS_PARA_GANHAR, "rodadas.")
 
-## Funcionalidades
-- Menu: iniciar jogo, consultar regras, consultar resultados e sair.
-- Identificação do jogador pelo nome.
-- Validação das opções digitadas.
-- Sorteio da jogada do computador.
-- Placar de vitórias, derrotas e empates.
-- Histórico das rodadas e resultados das partidas em listas.
-- Possibilidade de jogar novamente sem reiniciar o programa.
 
-## Exemplo de uso
-    Escolha: 1 - 🪨 Pedra | 2 - 📄 Papel | 3 - ✂️ Tesoura | 0 - Desistir
-    Sua opção: 1
-    Rodada 1: 🪨 Pedra x ✂️ Tesoura = Vitória
-    Placar: Ana 1 x 0 Computador | Empates: 0
+def pedir_nome():
+    nome = input("Digite seu nome: ").strip()
+    while nome == "":
+        nome = input("O nome não pode ficar vazio. Digite seu nome: ").strip()
+    return nome
 
-## Conceitos aplicados
-Entrada de dados, operadores, if/elif/else, match case, while, while True, for, listas, dicionário e funções.
 
-## Limitações conhecidas
-- Os resultados são apagados quando o programa é fechado.
-- Apenas um jogador por partida, contra o computador.
+def pedir_jogada():
+    print("\nEscolha: 1 - 🪨 Pedra | 2 - 📄 Papel | 3 - ✂️ Tesoura | 0 - Desistir")
+    escolha = input("Sua opção: ").strip()
+    while escolha not in ["0", "1", "2", "3"]:
+        escolha = input("Opção inválida! Digite 0, 1, 2 ou 3: ").strip()
+    return escolha
+
+
+def verificar_vencedor(jogador, computador):
+    if jogador == computador:
+        return "Empate"
+    elif VENCE[jogador] == computador:
+        return "Vitória"
+    else:
+        return "Derrota"
+
+
+def mostrar_historico(historico):
+    print("\n--- HISTÓRICO DE RODADAS ---")
+    if len(historico) == 0:
+        print("Nenhuma rodada jogada.")
+    for rodada in historico:
+        print(rodada)
+
+
+def jogar_partida(nome):
+    vitorias = 0
+    derrotas = 0
+    empates = 0
+    historico = []  # guarda uma frase formatada para cada rodada
+
+    while vitorias < VITORIAS_PARA_GANHAR and derrotas < VITORIAS_PARA_GANHAR:
+        escolha = pedir_jogada()
+        if escolha == "0":
+            break
+
+        jogador = OPCOES[int(escolha) - 1]
+        computador = random.choice(OPCOES)
+        resultado = verificar_vencedor(jogador, computador)
+
+        if resultado == "Vitória":
+            vitorias += 1
+            status_res = "Vitória 🏆"
+        elif resultado == "Derrota":
+            derrotas += 1
+            status_res = "Derrota ❌"
+        else:
+            empates += 1
+            status_res = "Empate 🤝"
+
+        rodada = (
+            f"Rodada {len(historico) + 1}: "
+            f"{EMOJIS[jogador]} {jogador} x {EMOJIS[computador]} {computador} = {status_res}"
+        )
+        historico.append(rodada)
+
+        print(rodada)
+        print(
+            f"Placar: {nome} {vitorias} x {derrotas} Computador "
+            f"| Empates: {empates}"
+        )
+
+    if vitorias == VITORIAS_PARA_GANHAR:
+        final = "ganhou"
+    elif derrotas == VITORIAS_PARA_GANHAR:
+        final = "perdeu"
+    else:
+        final = "desistiu"
+
+    mostrar_historico(historico)
+    resumo = f"{nome} {final} | Vitórias: {vitorias} | Derrotas: {derrotas} | Empates: {empates}"
+    print("\nFim da partida:", resumo)
+    return resumo
+
+
+def mostrar_resultados(resultados):
+    print("\n--- RESULTADOS DAS PARTIDAS ---")
+    if len(resultados) == 0:
+        print("Nenhuma partida jogada ainda.")
+    for resultado in resultados:
+        print(resultado)
+
+
+def main():
+    resultados = []  # guarda o resumo de cada partida
+
+    while True:
+        mostrar_menu()
+        opcao = input("Escolha uma opção: ").strip()
+
+        match opcao:
+            case "1":
+                nome = pedir_nome()
+                mostrar_regras()
+                resultados.append(jogar_partida(nome))
+            case "2":
+                mostrar_regras()
+            case "3":
+                mostrar_resultados(resultados)
+            case "4":
+                print("Até a próxima!")
+                break
+            case _:
+                print("Opção inválida! Tente novamente.")
+
+
+main()
