@@ -1,20 +1,21 @@
 # Jokenpô - UC 4: Desenvolver Algoritmos
-import os
 import random
+from colorama import init, Fore, Style
 
-os.system("")
+# Inicializa o colorama com autoreset para garantir cores no terminal do Windows/PowerShell
+init(autoreset=True)
 
-VERDE = "\033[92m"
-VERMELHO = "\033[91m"
-AMARELO = "\033[93m"
-CIANO = "\033[96m"
-NEGRITO = "\033[1m"
-RESET = "\033[0m"
+VERDE = Fore.GREEN
+VERMELHO = Fore.RED
+AMARELO = Fore.YELLOW
+CIANO = Fore.CYAN
+NEGRITO = Style.BRIGHT
+RESET = Style.RESET_ALL
 
 OPCOES = ["Pedra", "Papel", "Tesoura"]
 EMOJIS = {"Pedra": "🪨", "Papel": "📄", "Tesoura": "✂️"}
 
-# cada jogada (chave) vence o seu valor
+# Cada jogada (chave) vence o seu valor
 VENCE = {"Pedra": "Tesoura", "Papel": "Pedra", "Tesoura": "Papel"}
 
 VITORIAS_PARA_GANHAR = 3  # melhor de 5
@@ -73,7 +74,7 @@ def jogar_partida(nome):
     vitorias = 0
     derrotas = 0
     empates = 0
-    historico = []  # uma frase para cada rodada
+    historico = []  # guarda uma frase formatada para cada rodada
 
     while vitorias < VITORIAS_PARA_GANHAR and derrotas < VITORIAS_PARA_GANHAR:
         escolha = pedir_jogada()
