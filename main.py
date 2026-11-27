@@ -1,9 +1,22 @@
 # Jokenpô - UC 4: Desenvolver Algoritmos
 import random
-from colorama import init, Fore, Style
 
-# Inicializa o colorama com autoreset para garantir cores no terminal do Windows/PowerShell
-init(autoreset=True)
+try:
+    from colorama import init, Fore, Style
+
+    # Inicializa o colorama com autoreset para garantir cores no terminal do Windows/PowerShell
+    init(autoreset=True)
+except ImportError:
+    # Permite executar o jogo mesmo quando o colorama não estiver instalado
+    class Fore:
+        GREEN = "\033[32m"
+        RED = "\033[31m"
+        YELLOW = "\033[33m"
+        CYAN = "\033[36m"
+
+    class Style:
+        BRIGHT = "\033[1m"
+        RESET_ALL = "\033[0m"
 
 VERDE = Fore.GREEN
 VERMELHO = Fore.RED
